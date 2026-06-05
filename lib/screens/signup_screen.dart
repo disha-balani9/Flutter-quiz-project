@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizapp/Services/api_service.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -148,20 +149,42 @@ class _SignupScreenState extends State<SignupScreen> {
                 // 🔹 SIGNUP BUTTON
                 ElevatedButton(
                   child: Text("Create Account"),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Account Created")),
-                      );
+                    onPressed: () async {
 
-                      Navigator.pop(context);
+
+                      if (_formKey.currentState!.validate()) {
+
+                        bool success = await ApiService.signup(
+                          nameController.text,
+                          emailController.text,
+                          passwordController.text,
+                        );
+                        if (success) {
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Account Created Successfully"),
+                            ),
+                          );
+
+                          Navigator.pop(context);
+
+                        } else {
+
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Signup Failed"),
+                            ),
+                          );
+                        }
+                      }
                     }
-                  },
                 ),
 
                 SizedBox(height: 20),
 
-                // 🔹 BACK TO LOGIN
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

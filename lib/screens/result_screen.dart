@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'quiz_screen.dart';
 import 'category_screen.dart';
-
 class ResultScreen extends StatelessWidget {
   final int score;
+  final int total;
+  final String category;
 
-  ResultScreen({required this.score});
+  ResultScreen({
+    required this.score,
+    required this.total,
+    required this.category,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +54,7 @@ class ResultScreen extends StatelessWidget {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => QuizScreen(),
+                        builder: (_)  => QuizScreen(category: category),
                       ),
                     );
                   },
